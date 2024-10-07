@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import config from "./config";
+import config from "./app/config";
 import app from "./app";
 
 async function main() {
@@ -8,7 +8,7 @@ async function main() {
 
     const port = config.port;
     app.listen(port, () => {
-      console.log(`jack mart sport app listening on port ${port}`);
+      console.log(`greatest pet care app listening on port ${port}`);
     });
   } catch (err) {
     console.log(err);
