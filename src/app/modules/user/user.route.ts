@@ -25,5 +25,7 @@ router.get(
   auth(USER_ROLE.admin, USER_ROLE.user),
   UserControllers.getProfile
 );
+// get user by id
+router.get("/:id", UserControllers.getUserById);
 
 export const UserRouter = router;

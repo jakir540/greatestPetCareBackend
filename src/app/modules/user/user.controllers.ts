@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { UserServices } from "./user.services";
+import { Request } from "express";
 
 const userSignUp = catchAsync(async (req, res) => {
   const userData = req.body;
@@ -29,7 +30,7 @@ const userLogin = catchAsync(async (req, res) => {
   });
 });
 // get profile form DB
-const getProfile = catchAsync(async (req, res) => {
+const getProfile = catchAsync(async (req: any, res) => {
   console.log("35 controller", req);
   const result = await UserServices.getProfileIntoDB(req);
 
@@ -40,9 +41,21 @@ const getProfile = catchAsync(async (req, res) => {
     data: result,
   });
 });
+// get All User  form DB
+const getUserById = catchAsync(async (req, res) => {
+  const UserId = req.params.id;
+  const result = await UserServices.getUserByIdIntoDB(UserId);
 
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User retrived succesfully",
+    data: result,
+  });
+});
 export const UserControllers = {
   userSignUp,
   userLogin,
   getProfile,
+  getUserById,
 };

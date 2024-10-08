@@ -85,8 +85,20 @@ const getProfileIntoDB = async (req: Request) => {
   return remainingData;
 };
 
+// get all user from db
+const getUserByIdIntoDB = async (UserId: string) => {
+  try {
+    const users = await User.findById(UserId);
+
+    return users;
+  } catch (error) {
+    throw new Error("Failed to retrieve users from the database");
+  }
+};
+
 export const UserServices = {
   userSignUpIntoDB,
   userLoginIntoDB,
   getProfileIntoDB,
+  getUserByIdIntoDB,
 };
