@@ -55,6 +55,17 @@ const DeletePetStroyControllers = catchAsync(async (req, res) => {
     data: result,
   });
 });
+// get all pet story controller
+const GetAllPetStroyControllers = catchAsync(async (req, res) => {
+  const result = await PostStoryServices.GetAllPetStoryIntoDB();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Get all post  is successfully",
+    data: result,
+  });
+});
 // update pet story controller
 const GetSinglePetStroyControllers = catchAsync(async (req, res) => {
   const { id } = req.params;
@@ -94,6 +105,44 @@ const GetPetStroyByCategoryControllers = catchAsync(async (req, res) => {
     data: result,
   });
 });
+// upvote pet story controller
+const UpvotePetStroyControllers = catchAsync(async (req, res) => {
+  const result = await PostStoryServices.UpvotePetStroyIntoDB(req.params.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "upvote update  is successfully",
+    data: result,
+  });
+});
+// downvote pet story controller
+const DownvotePetStroyControllers = catchAsync(async (req, res) => {
+  const result = await PostStoryServices.DownvotePetStroyIntoDB(req.params.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "upvote update  is successfully",
+    data: result,
+  });
+});
+// downvote pet story controller
+const AddCommentControllers = catchAsync(async (req, res) => {
+  const commentId = req.body.commentId;
+
+  const result = await PostStoryServices.AddCommentIntoDB(
+    req.params.id,
+    commentId
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "upvote update  is successfully",
+    data: result,
+  });
+});
 
 export const PostControllers = {
   CreatePetStroyControllers,
@@ -102,4 +151,8 @@ export const PostControllers = {
   GetSinglePetStroyControllers,
   GetUserPetStroyControllers,
   GetPetStroyByCategoryControllers,
+  UpvotePetStroyControllers,
+  DownvotePetStroyControllers,
+  AddCommentControllers,
+  GetAllPetStroyControllers,
 };

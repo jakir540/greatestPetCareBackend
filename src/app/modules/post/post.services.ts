@@ -41,7 +41,12 @@ const DeletePetStoryIntoDB = async (id: string, res: Response) => {
   const result = await PetStory.findByIdAndDelete(id);
   return result;
 };
-// Delete pet story
+// get all pet story
+const GetAllPetStoryIntoDB = async () => {
+  const result = await PetStory.find();
+  return result;
+};
+// get single pet story
 const GetSinglePetStoryIntoDB = async (id: string, res: Response) => {
   const story = await PetStory.findById(id);
 
@@ -64,6 +69,35 @@ const GetPetStroyByCategoryIntoDB = async (category: string) => {
   const result = await PetStory.find({ category }).sort({ createdAt: -1 });
   return result;
 };
+// upvote pet story
+const UpvotePetStroyIntoDB = async (id: string) => {
+  const result = await PetStory.findByIdAndUpdate(id, {
+    $inc: { upvotes: 1 },
+    new: true,
+  });
+  return result;
+};
+// downvote pet story
+const DownvotePetStroyIntoDB = async (id: string) => {
+  const result = await PetStory.findByIdAndUpdate(id, {
+    $inc: { downvotes: 1 },
+    new: true,
+  });
+  return result;
+};
+// add comment pet story
+const AddCommentIntoDB = async (id: string, commentId: string) => {
+  const result = await PetStory.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        comments: commentId,
+      },
+    },
+    { new: true }
+  );
+  return result;
+};
 
 export const PostStoryServices = {
   createPetStoryIntoDB,
@@ -72,4 +106,8 @@ export const PostStoryServices = {
   GetSinglePetStoryIntoDB,
   GetUserPetStoryIntoDB,
   GetPetStroyByCategoryIntoDB,
+  UpvotePetStroyIntoDB,
+  DownvotePetStroyIntoDB,
+  AddCommentIntoDB,
+  GetAllPetStoryIntoDB,
 };

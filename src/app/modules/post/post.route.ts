@@ -16,6 +16,8 @@ router.put("/:id", PostControllers.UpdatePetStroyControllers);
 router.delete("/:id", PostControllers.DeletePetStroyControllers);
 
 // single get post
+router.get("/", PostControllers.GetAllPetStroyControllers);
+// single get post
 router.get("/:id", PostControllers.GetSinglePetStroyControllers);
 
 // get user post
@@ -26,5 +28,12 @@ router.get(
   "/category/:category",
   PostControllers.GetPetStroyByCategoryControllers
 );
+
+// upvote router
+router.post("/:id/upvote", PostControllers.UpvotePetStroyControllers);
+// downvote router
+router.post("/:id/downvote", PostControllers.DownvotePetStroyControllers);
+// upvote router
+router.post("/:id/comments", PostControllers.AddCommentControllers);
 
 export const PostRouter = router;
