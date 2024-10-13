@@ -95,10 +95,36 @@ const getUserByIdIntoDB = async (UserId: string) => {
     throw new Error("Failed to retrieve users from the database");
   }
 };
+// get all user from db
+const getAllUserIntoDB = async () => {
+  const users = await User.find();
 
+  return users;
+};
+// updateUprofileIdIntoDB function
+const updateUprofileIdIntoDB = async (
+  UserId: string,
+  reqBody: Partial<IUser>
+) => {
+  const { name, bio, phone, profilePicture } = reqBody;
+
+  const updatedUser = await User.findByIdAndUpdate(
+    UserId,
+    { name, bio, phone, profilePicture },
+    { new: true, runValidators: true }
+  );
+
+  if (!updatedUser) {
+    throw new Error("User not found.");
+  }
+
+  return updatedUser; // Ensure to return the updated user
+};
 export const UserServices = {
   userSignUpIntoDB,
   userLoginIntoDB,
   getProfileIntoDB,
   getUserByIdIntoDB,
+  updateUprofileIdIntoDB,
+  getAllUserIntoDB,
 };

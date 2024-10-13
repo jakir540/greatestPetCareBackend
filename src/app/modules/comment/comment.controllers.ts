@@ -39,7 +39,7 @@ const DeleteCommentController = catchAsync(async (req, res) => {
 const getCommentsByPostController = catchAsync(async (req, res) => {
   const { postId } = req.params;
 
-  const result = await CommentServices.getCommentsByPostIntoDB(postId);
+  const result = await CommentServices.getCommentsByPostIntoDB(postId, res);
 
   sendResponse(res, {
     success: true,

@@ -11,6 +11,6 @@ export interface IUser {
   profilePicture?: string;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
-  // followers?: string[];
-  // following?: string[];
+  followers?: string[];
+  following?: string[];
 }

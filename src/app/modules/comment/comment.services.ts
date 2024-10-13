@@ -71,7 +71,10 @@ const deleteCommentIntoDB = async (req, res) => {
 };
 // for comment delete functionality in services
 const getCommentsByPostIntoDB = async (postId: string, res) => {
-  const comments = await Comment.find({ postId });
+  const comments = await Comment.find({ postId }).populate(
+    "author",
+    "username"
+  );
 
   if (!comments) {
     return res.status(401).json({

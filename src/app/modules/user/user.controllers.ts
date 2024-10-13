@@ -41,7 +41,7 @@ const getProfile = catchAsync(async (req: any, res) => {
     data: result,
   });
 });
-// get All User  form DB
+// get  User  form DB
 const getUserById = catchAsync(async (req, res) => {
   const UserId = req.params.id;
   const result = await UserServices.getUserByIdIntoDB(UserId);
@@ -53,9 +53,38 @@ const getUserById = catchAsync(async (req, res) => {
     data: result,
   });
 });
+// get All User  form DB
+const getAllUser = catchAsync(async (req, res) => {
+  const result = await UserServices.getAllUserIntoDB();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User retrived succesfully",
+    data: result,
+  });
+});
+// upadte profile
+const updateProfile = catchAsync(async (req, res) => {
+  const userId = req.user.userId;
+  console.log({ userId });
+  console.log(req.body); // Assuming you are using JWT and user info is attached to req.user
+
+  const result = await UserServices.updateUprofileIdIntoDB(userId, req.body);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "update profile succesfully",
+    data: result,
+  });
+});
+
 export const UserControllers = {
   userSignUp,
   userLogin,
   getProfile,
   getUserById,
+  updateProfile,
+  getAllUser,
 };

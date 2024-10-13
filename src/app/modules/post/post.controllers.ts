@@ -4,26 +4,43 @@ import sendResponse from "../../utils/sendResponse";
 import { PostStoryServices } from "./post.services";
 
 const CreatePetStroyControllers = catchAsync(async (req, res) => {
-  console.log("body from post", req.body);
-  const { title, content, category, images } = req.body;
+  console.log("body from post", req.user);
 
+  // Check if req.user is available and contains _id
+  if (!req.user || !req.user.userId) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized. User must be logged in to create a post.",
+    });
+  }
+
+  // Destructure the required fields from request body
+  const { title, content, category, images, coverImage } = req.body;
+
+  // Prepare the story data
   const storyData = {
     title,
     content,
     category,
+    coverImage,
     images,
-    // author: req.user?._id,
+    author: req.user?.userId, // Assign the user ID to the author field
   };
+
   console.log("storyData ", storyData);
+
+  // Call the service to create a story in the database
   const result = await PostStoryServices.createPetStoryIntoDB(storyData);
 
+  // Send response back to the client
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "Post Created  is successfully",
+    message: "Post Created successfully",
     data: result,
   });
 });
+
 // update pet story controller
 const UpdatePetStroyControllers = catchAsync(async (req, res) => {
   const { id } = req.params;
@@ -79,19 +96,18 @@ const GetSinglePetStroyControllers = catchAsync(async (req, res) => {
     data: result,
   });
 });
-// get user pet story controller
+// get all user story
 const GetUserPetStroyControllers = catchAsync(async (req, res) => {
-  const userId = req.user?._id;
-
-  const result = await PostStoryServices.GetUserPetStoryIntoDB(userId);
+  const result = await PostStoryServices.GetUserPetStoryIntoDB();
 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "Get user post  is successfully",
+    message: "Get user post is successful",
     data: result,
   });
 });
+
 // get user pet story controller
 const GetPetStroyByCategoryControllers = catchAsync(async (req, res) => {
   const result = await PostStoryServices.GetPetStroyByCategoryIntoDB(

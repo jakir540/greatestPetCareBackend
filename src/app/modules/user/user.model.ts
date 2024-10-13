@@ -12,8 +12,8 @@ const UserSchema: Schema = new Schema(
     profilePicture: { type: String },
     resetPasswordToken: { type: String },
     resetPasswordExpires: { type: Date },
-    // followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    // following: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    following: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

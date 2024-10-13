@@ -43,7 +43,7 @@ const DeletePetStoryIntoDB = async (id: string, res: Response) => {
 };
 // get all pet story
 const GetAllPetStoryIntoDB = async () => {
-  const result = await PetStory.find();
+  const result = await PetStory.find().populate("author", "name email");
   return result;
 };
 // get single pet story
@@ -59,9 +59,11 @@ const GetSinglePetStoryIntoDB = async (id: string, res: Response) => {
   const result = await PetStory.findById(id);
   return result;
 };
-// Delete pet story
-const GetUserPetStoryIntoDB = async (userId: string) => {
-  const result = await PetStory.find({ author: userId });
+// get pet story
+const GetUserPetStoryIntoDB = async () => {
+  const result = await PetStory.find()
+    .populate("author", "name email")
+    .sort({ createdAt: -1 });
   return result;
 };
 // Delete pet story
